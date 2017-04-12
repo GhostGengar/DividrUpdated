@@ -17,6 +17,7 @@
 		F84517701E9969E10047CF16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F845176E1E9969E10047CF16 /* LaunchScreen.storyboard */; };
 		F84517781E996C430047CF16 /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84517771E996C430047CF16 /* GameElements.swift */; };
 		F845177A1E9981C40047CF16 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84517791E9981C40047CF16 /* GameOverScene.swift */; };
+		F8FE2DF41E9E1B25009E1984 /* scored.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F8FE2DF31E9E1B25009E1984 /* scored.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		F84517711E9969E10047CF16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F84517771E996C430047CF16 /* GameElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
 		F84517791E9981C40047CF16 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		F8FE2DF31E9E1B25009E1984 /* scored.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scored.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				F84517791E9981C40047CF16 /* GameOverScene.swift */,
 				F84517691E9969E10047CF16 /* Main.storyboard */,
 				F845176C1E9969E10047CF16 /* Assets.xcassets */,
+				F8FE2DF31E9E1B25009E1984 /* scored.mp3 */,
 				F845176E1E9969E10047CF16 /* LaunchScreen.storyboard */,
 				F84517711E9969E10047CF16 /* Info.plist */,
 			);
@@ -141,6 +144,7 @@
 			files = (
 				F845176B1E9969E10047CF16 /* Main.storyboard in Resources */,
 				F84517621E9969E10047CF16 /* GameScene.sks in Resources */,
+				F8FE2DF41E9E1B25009E1984 /* scored.mp3 in Resources */,
 				F845176D1E9969E10047CF16 /* Assets.xcassets in Resources */,
 				F84517701E9969E10047CF16 /* LaunchScreen.storyboard in Resources */,
 				F84517641E9969E10047CF16 /* Actions.sks in Resources */,
