@@ -15,12 +15,18 @@ class GameOverScene: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         self.backgroundColor = SKColor.black
+        self.anchorPoint.x = 0.5
+        self.anchorPoint.y = 0.5
+        gameOverInfo()
+    }
+    func gameOverInfo() {
         let message = "GAME OVER"
         let label = SKLabelNode(fontNamed: "Optima-ExtraBlack")
         label.text = message
         label.fontColor = SKColor.white
-        label.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        label.position = CGPoint(x: 0, y: 0)
         addChild(label)
+        
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let transition = SKTransition.fade(withDuration: 0.3)

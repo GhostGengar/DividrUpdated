@@ -16,6 +16,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var initialPlayerPosition:CGPoint!
     
+    let scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+    var score:Int = 0 {
+        didSet {
+            scoreLabel.text = String(score)
+        }
+    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let maximumPossibleForce = touch.maximumPossibleForce
@@ -41,6 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.anchorPoint.x = 0.5
         self.anchorPoint.y = 0.5
         addPlayer()
+        setUpLabels()
     }
     
     func randomRow() {
@@ -70,16 +78,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        if contact.bodyA.node?.name == "PLAYER" {
+        var scoringPoint:SKSpriteNode!
+        if (contact.bodyA.node?.name == "PLAYER" && contact.bodyB.node?.name == "OBSTACLE") || (contact.bodyA.node?.name == "OBSTACLE" && contact.bodyB.node?.name == "PLAYER") {
             showGameOver()
-            self.removeAllChildren()
+        } else if (contact.bodyA.node?.name == "PLAYER" && contact.bodyB.node?.name == "SCORING-POINT") || (contact.bodyA.node?.name == "SCORING-POINT" && contact.bodyB.node?.name == "PLAYER") {
+            if contact.bodyA.node?.name == "SCORING-POINT" {
+                scoringPoint = contact.bodyA.node as! SKSpriteNode
+                self.run(SKAction.playSoundFileNamed("scored.mp3", waitForCompletion: false))
+                self.playerDidScore(whatScoringNode: scoringPoint)
+            } else {
+                scoringPoint = contact.bodyB.node as! SKSpriteNode
+                self.run(SKAction.playSoundFileNamed("scored.mp3", waitForCompletion: false))
+                self.playerDidScore(whatScoringNode: scoringPoint)
+            }
         }
     }
     
     func showGameOver() {
         let transition = SKTransition.fade(withDuration: 0.2)
         let gameOverScene = GameOverScene(size: self.size)
+        self.removeAllChildren()
         self.view?.presentScene(gameOverScene, transition: transition)
+    }
+    
+    func playerDidScore(whatScoringNode: SKSpriteNode) {
+        whatScoringNode.removeFromParent()
+        score += 1
     }
     
     var lastUpdateTimeInterval = TimeInterval()
