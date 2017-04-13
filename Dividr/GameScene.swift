@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var backgroundEffect:SKEmitterNode!
+    
     var player:SKSpriteNode!
     var player2:SKSpriteNode!
     
@@ -49,6 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.anchorPoint.y = 0.5
         addPlayer()
         setUpLabels()
+        setUpBgEffect()
     }
     
     func randomRow() {
@@ -99,11 +102,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let gameOverScene = GameOverScene(size: self.size)
         self.removeAllChildren()
         self.view?.presentScene(gameOverScene, transition: transition)
+        updateHighScore(withScore: score)
     }
     
     func playerDidScore(whatScoringNode: SKSpriteNode) {
         whatScoringNode.removeFromParent()
         score += 1
+    }
+    
+    func updateHighScore(withScore:Int) {
+        let userDefaults = UserDefaults.standard
+        if let currentHighestScore = userDefaults.value(forKey: "HIGHEST-SCORE") as? Int {
+            if withScore > currentHighestScore {
+                userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
+                userDefaults.synchronize()
+            }
+        } else {
+            userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
+            userDefaults.synchronize()
+        }
     }
     
     var lastUpdateTimeInterval = TimeInterval()

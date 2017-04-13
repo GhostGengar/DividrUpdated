@@ -31,6 +31,14 @@ enum RowType:Int {
 
 extension GameScene {
     
+    func setUpBgEffect() {
+        backgroundEffect = SKEmitterNode(fileNamed: "bgEffect")
+        backgroundEffect.position = CGPoint(x: 0, y: 0)
+        backgroundEffect.zPosition = -1
+        backgroundEffect.advanceSimulationTime(5)
+        addChild(backgroundEffect)
+    }
+    
     func setUpLabels() {
         scoreLabel.fontSize = 100
         scoreLabel.zPosition = 3
