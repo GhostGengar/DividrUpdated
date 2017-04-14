@@ -44,7 +44,7 @@ class StartScreenScene: SKScene {
     }
     
     func newGame() {
-        let transition = SKTransition.flipHorizontal(withDuration: 0.3)
+        let transition = SKTransition.fade(withDuration: 0.7)
         let gameScene = GameScene(size: self.size)
         self.view?.presentScene(gameScene, transition: transition)
     }

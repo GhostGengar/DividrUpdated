@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 
+var globalCurrentScore:Int = 0
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var backgroundEffect:SKEmitterNode!
@@ -19,11 +20,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var initialPlayerPosition:CGPoint!
     
     let scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
-    var score:Int = 0 {
-        didSet {
-            scoreLabel.text = String(score)
-        }
-    }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
@@ -45,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func didMove(to view: SKView) {
+        globalCurrentScore = 0
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
         self.anchorPoint.x = 0.5
@@ -98,29 +95,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func showGameOver() {
-        let transition = SKTransition.fade(withDuration: 0.2)
-        let gameOverScene = GameOverScene(size: self.size)
-        self.removeAllChildren()
-        self.view?.presentScene(gameOverScene, transition: transition)
-        updateHighScore(withScore: score)
+        let transition = SKTransition.fade(withDuration: 0.3)
+        if let gameOverScene = SKScene(fileNamed: "GameOverScene") {
+            gameOverScene.scaleMode = .aspectFill
+            self.removeAllChildren()
+            self.view?.presentScene(gameOverScene, transition: transition)
+        }
     }
     
     func playerDidScore(whatScoringNode: SKSpriteNode) {
         whatScoringNode.removeFromParent()
-        score += 1
-    }
-    
-    func updateHighScore(withScore:Int) {
-        let userDefaults = UserDefaults.standard
-        if let currentHighestScore = userDefaults.value(forKey: "HIGHEST-SCORE") as? Int {
-            if withScore > currentHighestScore {
-                userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
-                userDefaults.synchronize()
-            }
-        } else {
-            userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
-            userDefaults.synchronize()
-        }
+        globalCurrentScore += 1
+        scoreLabel.text = String(globalCurrentScore)
     }
     
     var lastUpdateTimeInterval = TimeInterval()

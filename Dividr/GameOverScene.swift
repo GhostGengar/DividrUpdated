@@ -2,35 +2,85 @@
 //  GameOverScene.swift
 //  Dividr
 //
-//  Created by Luke Dinh on 4/8/17.
+//  Created by Luke Dinh on 4/14/17.
 //  Copyright © 2017 Blue Lamp. All rights reserved.
 //
 
 import SpriteKit
 
 class GameOverScene: SKScene {
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    
+    var lastGameScoreLabelNode:SKLabelNode!
+    var currentHighScoreLabelNode:SKLabelNode!
+    
+    var replayButtonNode:SKSpriteNode!
+    var mainMenuButtonNode:SKSpriteNode!
+    
+    override func didMove(to view: SKView) {
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        setUpLabels()
+        setUpButtons()
     }
-    override init(size: CGSize) {
-        super.init(size: size)
-        self.backgroundColor = SKColor.black
-        self.anchorPoint.x = 0.5
-        self.anchorPoint.y = 0.5
-        gameOverInfo()
-    }
-    func gameOverInfo() {
-        let message = "GAME OVER"
-        let label = SKLabelNode(fontNamed: "Optima-ExtraBlack")
-        label.text = message
-        label.fontColor = SKColor.white
-        label.position = CGPoint(x: 0, y: 0)
-        addChild(label)
-        
-    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        if let location = touch?.location(in: self) {
+            let nodesArray = self.nodes(at: location)
+            if nodesArray.first?.name == "replayButton" {
+                replayAction()
+            } else if nodesArray.first?.name == "mainMenuButton" {
+                mainMenuAction()
+            }
+        }
+    }
+    
+    func replayAction() {
         let transition = SKTransition.fade(withDuration: 0.3)
         let gameScene = GameScene(size: self.size)
         self.view?.presentScene(gameScene, transition: transition)
+    }
+    
+    func mainMenuAction() {
+        let transition = SKTransition.fade(withDuration: 0.3)
+        if let startScreenScene = SKScene(fileNamed: "StartScreenScene") {
+            startScreenScene.scaleMode = .aspectFill
+            self.view?.presentScene(startScreenScene, transition: transition)
+        }
+    }
+    
+    func setUpLabels() {
+        lastGameScoreLabelNode = self.childNode(withName: "lastGameScoreLabel") as! SKLabelNode
+        lastGameScoreLabelNode.text = "Score: \(globalCurrentScore)"
+        currentHighScoreLabelNode = self.childNode(withName: "currentHighScoreLabel") as! SKLabelNode
+        let userDefaults = UserDefaults.standard
+        if let score = userDefaults.value(forKey: "HIGHEST-SCORE") as? Int {
+            if globalCurrentScore > score {
+                updateHighScore(withScore: globalCurrentScore)
+                currentHighScoreLabelNode.text = "New Best Score!"
+            } else {
+                currentHighScoreLabelNode.text = "High Score: \(score)"
+            }
+        } else {
+            updateHighScore(withScore: globalCurrentScore)
+            currentHighScoreLabelNode.text = "New Best Score!"
+        }
+    }
+    
+    func setUpButtons() {
+        replayButtonNode = self.childNode(withName: "replayButton") as! SKSpriteNode
+        mainMenuButtonNode = self.childNode(withName: "mainMenuButton") as! SKSpriteNode
+    }
+    
+    func updateHighScore(withScore:Int) {
+        let userDefaults = UserDefaults.standard
+        if let currentHighestScore = userDefaults.value(forKey: "HIGHEST-SCORE") as? Int {
+            if withScore > currentHighestScore {
+                userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
+                userDefaults.synchronize()
+            }
+        } else {
+            userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
+            userDefaults.synchronize()
+        }
     }
 }
