@@ -48,21 +48,36 @@ extension GameScene {
         addChild(scoreLabel)
     }
     
+    func setUpTailEffects() {
+        playerOneTailEffect = SKEmitterNode(fileNamed: "tailEffect")
+        playerTwoTailEffect = SKEmitterNode(fileNamed: "tailEffect")
+        playerOneTailEffect.targetNode = self
+        playerTwoTailEffect.targetNode = self
+        playerOneTailEffect.position = CGPoint(x: 0, y: 0)
+        playerTwoTailEffect.position = CGPoint(x: 0, y: 0)
+    }
+    
     func addPlayer() {
-        player = SKSpriteNode(color: #colorLiteral(red: 1, green: 0.007480408822, blue: 0.0707211995, alpha: 1), size: CGSize(width: 50, height: 50))
+        setUpTailEffects()
+        
+        let playerTexture = SKTexture(imageNamed: "player")
+        
+        player = SKSpriteNode(texture: playerTexture, size: CGSize(width: 50, height: 50))
         player.position = CGPoint(x: 0, y: -550)
         player.name = "PLAYER"
         player.physicsBody?.isDynamic = false
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        player.addChild(playerOneTailEffect)
         player.physicsBody?.categoryBitMask = CollisionBitmask.Player
         player.physicsBody?.collisionBitMask = 0
         player.physicsBody?.contactTestBitMask = CollisionBitmask.ScoringPoint | CollisionBitmask.Obstacle
         
-        player2 = SKSpriteNode(color: #colorLiteral(red: 1, green: 0.007480408822, blue: 0.0707211995, alpha: 1), size: CGSize(width: 50, height: 50))
+        player2 = SKSpriteNode(texture: playerTexture, size: CGSize(width: 50, height: 50))
         player2.position = CGPoint(x: 0, y: -550)
         player2.name = "PLAYER"
         player2.physicsBody?.isDynamic = false
         player2.physicsBody = SKPhysicsBody(rectangleOf: player2.size)
+        player2.addChild(playerTwoTailEffect)
         player2.physicsBody?.categoryBitMask = CollisionBitmask.Player
         player2.physicsBody?.collisionBitMask = 0
         player2.physicsBody?.contactTestBitMask = CollisionBitmask.ScoringPoint | CollisionBitmask.Obstacle

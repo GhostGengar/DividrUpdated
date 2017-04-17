@@ -13,6 +13,8 @@ var globalCurrentScore:Int = 0
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var backgroundEffect:SKEmitterNode!
+    var playerOneTailEffect:SKEmitterNode!
+    var playerTwoTailEffect:SKEmitterNode!
     
     var player:SKSpriteNode!
     var player2:SKSpriteNode!
@@ -20,6 +22,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var initialPlayerPosition:CGPoint!
     
     let scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+    
+    var soundEffects = [SKAction]()
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
@@ -46,6 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         self.anchorPoint.x = 0.5
         self.anchorPoint.y = 0.5
+        soundEffects = [SKAction.playSoundFileNamed("scored.wav", waitForCompletion: false), SKAction.playSoundFileNamed("gameOver.wav", waitForCompletion: false)]
         addPlayer()
         setUpLabels()
         setUpBgEffect()
@@ -84,17 +89,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if (contact.bodyA.node?.name == "PLAYER" && contact.bodyB.node?.name == "SCORING-POINT") || (contact.bodyA.node?.name == "SCORING-POINT" && contact.bodyB.node?.name == "PLAYER") {
             if contact.bodyA.node?.name == "SCORING-POINT" {
                 scoringPoint = contact.bodyA.node as! SKSpriteNode
-                self.run(SKAction.playSoundFileNamed("scored.mp3", waitForCompletion: false))
+                run(soundEffects[0])
                 self.playerDidScore(whatScoringNode: scoringPoint)
             } else {
                 scoringPoint = contact.bodyB.node as! SKSpriteNode
-                self.run(SKAction.playSoundFileNamed("scored.mp3", waitForCompletion: false))
+                run(soundEffects[0])
                 self.playerDidScore(whatScoringNode: scoringPoint)
             }
         }
     }
     
     func showGameOver() {
+        self.run(soundEffects[1])
         let transition = SKTransition.fade(withDuration: 0.3)
         if let gameOverScene = SKScene(fileNamed: "GameOverScene") {
             gameOverScene.scaleMode = .aspectFill

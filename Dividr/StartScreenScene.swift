@@ -53,6 +53,8 @@ class StartScreenScene: SKScene {
         let userDefaults = UserDefaults.standard
         if let score = userDefaults.value(forKey: "HIGHEST-SCORE") as? Int {
             highScoreLabelNode.text = String(score)
+        } else {
+            highScoreLabelNode.text = "No Data"
         }
     }
 }
