@@ -18,6 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player:SKSpriteNode!
     var player2:SKSpriteNode!
+    var checkPointNode:SKNode!
     
     var initialPlayerPosition:CGPoint!
     
@@ -85,22 +86,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         var scoringPoint:SKSpriteNode!
         if (contact.bodyA.node?.name == "PLAYER" && contact.bodyB.node?.name == "OBSTACLE") || (contact.bodyA.node?.name == "OBSTACLE" && contact.bodyB.node?.name == "PLAYER") {
+            if useSound {
+                self.run(soundEffects[1])
+            }
             showGameOver()
         } else if (contact.bodyA.node?.name == "PLAYER" && contact.bodyB.node?.name == "SCORING-POINT") || (contact.bodyA.node?.name == "SCORING-POINT" && contact.bodyB.node?.name == "PLAYER") {
             if contact.bodyA.node?.name == "SCORING-POINT" {
                 scoringPoint = contact.bodyA.node as! SKSpriteNode
-                run(soundEffects[0])
+                if useSound {
+                    self.run(soundEffects[0])
+                }
                 self.playerDidScore(whatScoringNode: scoringPoint)
             } else {
                 scoringPoint = contact.bodyB.node as! SKSpriteNode
-                run(soundEffects[0])
+                if useSound {
+                    self.run(soundEffects[0])
+                }
                 self.playerDidScore(whatScoringNode: scoringPoint)
+            }
+        }
+        if selectedDifficulty == .insane {
+            if contact.bodyA.node?.name == "CHECKPOINT" || contact.bodyB.node?.name == "CHECKPOINT" {
+                showGameOver()
             }
         }
     }
     
     func showGameOver() {
-        self.run(soundEffects[1])
         let transition = SKTransition.fade(withDuration: 0.3)
         if let gameOverScene = SKScene(fileNamed: "GameOverScene") {
             gameOverScene.scaleMode = .aspectFill

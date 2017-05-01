@@ -11,9 +11,11 @@ import SpriteKit
 import GameplayKit
 import AVFoundation
 
+var useSound:Bool!
+
+var backgroundMusicPlayer:AVAudioPlayer!
+
 class GameViewController: UIViewController {
-    
-    var backgroundMusicPlayer = AVAudioPlayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,6 @@ class GameViewController: UIViewController {
         
         backgroundMusicPlayer.numberOfLoops = -1
         backgroundMusicPlayer.prepareToPlay()
-        backgroundMusicPlayer.play()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'StartScreenScene.sks'
@@ -41,8 +42,8 @@ class GameViewController: UIViewController {
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = false
-            view.showsNodeCount = false
+            view.showsFPS = true
+            view.showsNodeCount = true
         }
     }
 

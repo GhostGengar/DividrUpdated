@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F81902F01EA5E85E00371545 /* HighScoreScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F81902EF1EA5E85E00371545 /* HighScoreScene.sks */; };
+		F81902F21EA5EA6800371545 /* HighScoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81902F11EA5EA6800371545 /* HighScoreScene.swift */; };
 		F822B6561E9E7ADF00A040E1 /* StartScreenScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F822B6551E9E7ADF00A040E1 /* StartScreenScene.sks */; };
 		F822B65A1E9E7CA400A040E1 /* StartScreenScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F822B6591E9E7CA400A040E1 /* StartScreenScene.swift */; };
 		F822B65E1E9EBE8D00A040E1 /* bgEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = F822B65D1E9EBE8D00A040E1 /* bgEffect.sks */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F81902EF1EA5E85E00371545 /* HighScoreScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HighScoreScene.sks; sourceTree = "<group>"; };
+		F81902F11EA5EA6800371545 /* HighScoreScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighScoreScene.swift; sourceTree = "<group>"; };
 		F822B6551E9E7ADF00A040E1 /* StartScreenScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScreenScene.sks; sourceTree = "<group>"; };
 		F822B6591E9E7CA400A040E1 /* StartScreenScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScreenScene.swift; sourceTree = "<group>"; };
 		F822B65D1E9EBE8D00A040E1 /* bgEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bgEffect.sks; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 				F86145B41EA15CED0025BFAC /* tailEffect.sks */,
 				F84517631E9969E10047CF16 /* Actions.sks */,
 				F822B6551E9E7ADF00A040E1 /* StartScreenScene.sks */,
+				F81902EF1EA5E85E00371545 /* HighScoreScene.sks */,
 				F822B65D1E9EBE8D00A040E1 /* bgEffect.sks */,
 				F822B66C1EA0C0B500A040E1 /* GameOverScene.sks */,
 			);
@@ -82,6 +87,7 @@
 				F84517771E996C430047CF16 /* GameElements.swift */,
 				F822B6591E9E7CA400A040E1 /* StartScreenScene.swift */,
 				F84517671E9969E10047CF16 /* GameViewController.swift */,
+				F81902F11EA5EA6800371545 /* HighScoreScene.swift */,
 				F822B66E1EA0C13400A040E1 /* GameOverScene.swift */,
 			);
 			name = Sources;
@@ -214,6 +220,7 @@
 				F84517641E9969E10047CF16 /* Actions.sks in Resources */,
 				F822B6691EA0B6A900A040E1 /* bgMusic.mp3 in Resources */,
 				F822B66D1EA0C0B500A040E1 /* GameOverScene.sks in Resources */,
+				F81902F01EA5E85E00371545 /* HighScoreScene.sks in Resources */,
 				F822B65E1E9EBE8D00A040E1 /* bgEffect.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F86145B61EA1631A0025BFAC /* GameElements.swift in Sources */,
+				F81902F21EA5EA6800371545 /* HighScoreScene.swift in Sources */,
 				F84517661E9969E10047CF16 /* GameScene.swift in Sources */,
 				F84517681E9969E10047CF16 /* GameViewController.swift in Sources */,
 				F84517601E9969E10047CF16 /* AppDelegate.swift in Sources */,

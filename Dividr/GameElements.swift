@@ -12,6 +12,7 @@ struct CollisionBitmask {
     static let Player:UInt32 = 0x00
     static let Obstacle:UInt32 = 0x01
     static let ScoringPoint:UInt32 = 0x02
+    static let CheckPoint:UInt32 = 0x03
 }
 
 enum ObstacleType:Int {
@@ -86,6 +87,18 @@ extension GameScene {
         addChild(player2)
         
         initialPlayerPosition = player.position
+        
+        if selectedDifficulty == .insane {
+            checkPointNode = SKNode()
+            checkPointNode.name = "CHECKPOINT"
+            checkPointNode.position = CGPoint(x: 0, y: -600)
+            checkPointNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.size.width, height: 30))
+            checkPointNode.physicsBody?.isDynamic = false
+            checkPointNode.physicsBody?.categoryBitMask = CollisionBitmask.CheckPoint
+            checkPointNode.physicsBody?.collisionBitMask = 0
+            checkPointNode.physicsBody?.contactTestBitMask = CollisionBitmask.ScoringPoint
+            addChild(checkPointNode)
+        }
     }
     
     func addObstacle(type: ObstacleType) -> SKSpriteNode {
@@ -234,7 +247,11 @@ extension GameScene {
     
     func addMovement(obstacle:SKSpriteNode) {
         var actionArray = [SKAction]()
-        actionArray.append(SKAction.moveTo(y: -obstacle.position.y, duration: 3.3))
+        if selectedDifficulty == .normal || selectedDifficulty == .insane {
+            actionArray.append(SKAction.moveTo(y: -obstacle.position.y, duration: 3.3))
+        } else {
+            actionArray.append(SKAction.moveTo(y: -obstacle.position.y, duration: 2.3))
+        }
         actionArray.append(SKAction.removeFromParent())
         obstacle.run(SKAction.sequence(actionArray))
     }

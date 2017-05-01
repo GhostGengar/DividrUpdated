@@ -53,7 +53,15 @@ class GameOverScene: SKScene {
         lastGameScoreLabelNode.text = "Score: \(globalCurrentScore)"
         currentHighScoreLabelNode = self.childNode(withName: "currentHighScoreLabel") as! SKLabelNode
         let userDefaults = UserDefaults.standard
-        if let score = userDefaults.value(forKey: "HIGHEST-SCORE") as? Int {
+        var currentDifficultyText:String!
+        if selectedDifficulty == .normal {
+            currentDifficultyText = "NORMAL-HIGHEST-SCORE"
+        } else if selectedDifficulty == .hard {
+            currentDifficultyText = "HARD-HIGHEST-SCORE"
+        } else {
+            currentDifficultyText = "INSANE-HIGHEST-SCORE"
+        }
+        if let score = userDefaults.value(forKey: currentDifficultyText) as? Int {
             if globalCurrentScore > score {
                 updateHighScore(withScore: globalCurrentScore)
                 currentHighScoreLabelNode.text = "New Best Score!"
@@ -73,13 +81,21 @@ class GameOverScene: SKScene {
     
     func updateHighScore(withScore:Int) {
         let userDefaults = UserDefaults.standard
-        if let currentHighestScore = userDefaults.value(forKey: "HIGHEST-SCORE") as? Int {
+        var currentDifficultyText:String!
+        if selectedDifficulty == .normal {
+            currentDifficultyText = "NORMAL-HIGHEST-SCORE"
+        } else if selectedDifficulty == .hard {
+            currentDifficultyText = "HARD-HIGHEST-SCORE"
+        } else {
+            currentDifficultyText = "INSANE-HIGHEST-SCORE"
+        }
+        if let currentHighestScore = userDefaults.value(forKey: currentDifficultyText) as? Int {
             if withScore > currentHighestScore {
-                userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
+                userDefaults.set(withScore, forKey: currentDifficultyText)
                 userDefaults.synchronize()
             }
         } else {
-            userDefaults.set(withScore, forKey: "HIGHEST-SCORE")
+            userDefaults.set(withScore, forKey: currentDifficultyText)
             userDefaults.synchronize()
         }
     }
